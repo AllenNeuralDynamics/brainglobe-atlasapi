@@ -118,6 +118,17 @@ def get_brainglobe_dir():
     return Path(conf["default_dirs"]["brainglobe_dir"])
 
 
+def set_brainglobe_dir(dir='~/.brainglobe'):
+    """Change or reset the brainglobe directory
+
+    Parameters
+    ----------
+    dir : str, optional
+        New directory, by default '~/.brainglobe'
+    """
+    write_config_value("brainglobe_dir", dir)
+
+
 def cli_modify_config(key=0, value=0, show=False):
     # Ensure that we choose valid paths for default directory. The path does
     # not have to exist yet, but the parent must be valid:
