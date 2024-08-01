@@ -121,7 +121,7 @@ def get_brainglobe_dir():
     return Path(conf["default_dirs"][CONFIG_KEY_BGDIR])
 
 
-def set_brainglobe_dir(dir='~/.brainglobe'):
+def set_brainglobe_dir(dir=DEFAULT_PATH):
     """Change or reset the brainglobe directory
 
     Parameters
