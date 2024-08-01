@@ -10,7 +10,7 @@ from rich.console import Console
 from brainglobe_atlasapi import config, core, descriptors, utils
 from brainglobe_atlasapi.utils import _rich_atlas_metadata
 
-COMPRESSED_FILENAME = "atlas.tar.gz"
+COMPRESSED_EXT = ".tar.gz"
 
 
 def _version_tuple_from_str(version_str):
@@ -164,7 +164,7 @@ class BrainGlobeAtlas(core.Atlas):
         utils.check_internet_connection()
 
         # Get path to folder where data will be saved
-        destination_path = self.interm_download_dir / COMPRESSED_FILENAME
+        destination_path = self.interm_download_dir / f'{self.atlas_name}{COMPRESSED_EXT}'
 
         # Try to download atlas data
         utils.retrieve_over_http(

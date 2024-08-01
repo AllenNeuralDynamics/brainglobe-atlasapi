@@ -44,7 +44,7 @@ jobs:
         with:
           path: | # ensure we don't cache any interrupted atlas download and extraction, if e.g. we cancel the workflow manually
             ~/.brainglobe
-            !~/.brainglobe/atlas.tar.gz
+            !~/.brainglobe/*.tar.gz
           key: brainglobe
 
       - uses: neuroinformatics-unit/actions/test@v2
