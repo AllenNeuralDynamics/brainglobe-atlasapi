@@ -67,7 +67,7 @@ class BrainGlobeAtlas(core.Atlas):
         # and create directory if it does not exist:
         for dir, dirname in zip(
             [brainglobe_dir, interm_download_dir],
-            ["brainglobe_dir", "interm_download_dir"],
+            [config.CONFIG_KEY_BGDIR, config.CONFIG_KEY_INTERMDOWNLOAD],
         ):
             if dir is None:
                 dir = conf["default_dirs"][dirname]
