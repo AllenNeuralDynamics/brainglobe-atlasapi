@@ -17,11 +17,14 @@ CONFIG_DEFAULT_DIR = Path.home() / ".config" / "brainglobe"
 CONFIG_DIR = Path(os.environ.get("BRAINGLOBE_CONFIG_DIR", CONFIG_DEFAULT_DIR))
 CONFIG_PATH = CONFIG_DIR / CONFIG_FILENAME
 
+# Config file keys
+CONFIG_KEY_BGDIR = "brainglobe_dir"
+
 # 2 level dictionary for sections and values:
 DEFAULT_PATH = Path.home() / ".brainglobe"
 TEMPLATE_CONF_DICT = {
     "default_dirs": {
-        "brainglobe_dir": DEFAULT_PATH,
+        CONFIG_KEY_BGDIR: DEFAULT_PATH,
         "interm_download_dir": DEFAULT_PATH,
     }
 }
@@ -115,7 +118,18 @@ def get_brainglobe_dir():
         default BrainGlobe directory with atlases
     """
     conf = read_config()
-    return Path(conf["default_dirs"]["brainglobe_dir"])
+    return Path(conf["default_dirs"][CONFIG_KEY_BGDIR])
+
+
+def set_brainglobe_dir(dir=DEFAULT_PATH):
+    """Change or reset the brainglobe directory
+
+    Parameters
+    ----------
+    dir : str, optional
+        New directory, by default '~/.brainglobe'
+    """
+    write_config_value(CONFIG_KEY_BGDIR, dir)
 
 
 def cli_modify_config(key=0, value=0, show=False):
