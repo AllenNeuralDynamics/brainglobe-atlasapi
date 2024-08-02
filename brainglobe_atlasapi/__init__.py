@@ -11,3 +11,6 @@ except PackageNotFoundError:
 
 from brainglobe_atlasapi.bg_atlas import BrainGlobeAtlas
 from brainglobe_atlasapi.list_atlases import show_atlases
+
+from brainglobe_atlasapi.config import read_config
+read_config()
