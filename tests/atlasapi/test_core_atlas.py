@@ -174,3 +174,11 @@ def test_descendants(atlas):
 
     desc = atlas.get_structure_descendants("root")
     assert desc == ["grey", "CH"]
+
+
+def test_mask(atlas):
+    mask = atlas.get_structure_mask('VISp')
+    mask_left = atlas.get_structure_mask('VISp', hemisphere=-1)
+
+    assert np.sum(mask > 0) == 7113
+    assert np.sum((mask > 0) & (mask_left > 0)) == 3548
