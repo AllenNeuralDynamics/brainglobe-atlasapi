@@ -17,6 +17,9 @@ from brainglobe_atlasapi.descriptors import (
 from brainglobe_atlasapi.structure_class import StructuresDict
 from brainglobe_atlasapi.utils import read_json, read_tiff
 
+LEFT_HEMI_VAL = 1
+RIGHT_HEMI_VAL = 2
+
 
 class Atlas:
     """Base class to handle atlases in BrainGlobe.
@@ -26,9 +29,6 @@ class Atlas:
     path : str or Path object
         Path to folder containing data info.
     """
-
-    left_hemisphere_value = 1
-    right_hemisphere_value = 2
 
     def __init__(self, path):
         self.root_dir = Path(path)
@@ -303,7 +303,7 @@ class Atlas:
 
         return descendants
 
-    def get_structure_mask(self, structure):
+    def get_structure_mask(self, structure, hemisphere=0):
         """
         Returns a stack with the mask for a specific structure (including all
         sub-structures).
@@ -315,6 +315,8 @@ class Atlas:
         ----------
         structure : str or int
             Structure id or acronym
+        hemisphere : int, optional
+            -1 left, 1 right, 0 both, by default = 0
 
         Returns
         -------
@@ -331,6 +333,14 @@ class Atlas:
 
         mask_stack = np.zeros(self.shape, self.annotation.dtype)
         mask_stack[np.isin(self.annotation, descendant_ids)] = structure_id
+
+        if not hemisphere == 0:
+            if hemisphere == -1:
+                mask_stack[self.hemispheres == RIGHT_HEMI_VAL] = 0
+            elif hemisphere == 1:
+                mask_stack[self.hemispheres == LEFT_HEMI_VAL] = 0
+            else:
+                raise ValueError('Hemispheres parameter should be one of [-1, 0, 1]')
 
         return mask_stack
 
