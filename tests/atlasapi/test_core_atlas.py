@@ -178,11 +178,11 @@ def test_descendants(atlas):
 
 
 def test_mask(atlas):
-    mask = atlas.get_structure_mask('CH')
-    mask_left = atlas.get_structure_mask('CH', hemisphere=-1)
+    mask = atlas.get_structure_mask('root')
+    mask_left = atlas.get_structure_mask('root', hemisphere=-1)
 
-    assert np.sum(mask > 0) == 17656111
-    assert np.sum((mask > 0) & (mask_left > 0)) == 8809100
+    assert np.sum(mask > 0) == 3589
+    assert np.sum((mask > 0) & (mask_left > 0)) == 1709
 
 
 def test_leaf(atlas):
