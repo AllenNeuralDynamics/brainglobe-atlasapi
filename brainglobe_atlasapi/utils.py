@@ -317,3 +317,40 @@ def read_tiff(path):
 
     """
     return tifffile.imread(str(path))
+
+
+def get_leaves_from_tree(structures_list):
+    """Parse a structure tree (in list format) to find leaf nodes
+
+    We'll do this by going through the list once to create a dictionary mapping ID->node
+    A second time to map nodes to their parents (as children)
+    And a third time to pull all the nodes with no children
+
+    Parameters
+    ----------
+    structures_list : list
+        List of structures from BrainGlobeAtlas.structures_list
+    """
+
+    id_map = {}
+
+    # Get a map of id -> structure
+    for structure in structures_list:
+        structure['children'] = []
+        id_map[structure['id']] = structure
+
+    # Map each node to it's parent.children list
+    for structure in structures_list:
+        if len(structure['structure_id_path']) > 1:
+            parent_id = structure['structure_id_path'][-2]
+
+            if not parent_id == structure['id']:
+                id_map[parent_id]['children'].append(structure['id'])
+
+    # Get leaf nodes
+    leaf_nodes = []
+    for id in id_map.keys():
+        if not id_map[id]['children']:
+            leaf_nodes.append(id)
+
+    return leaf_nodes

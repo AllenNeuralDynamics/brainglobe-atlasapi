@@ -81,3 +81,14 @@ def test_get_download_size_HTTPError():
 
         with pytest.raises(HTTPError):
             utils.get_download_size(test_url)
+
+
+def test_get_leaves():
+    structures_list = [
+        {'acronym': 'root', 'id': 997, 'name': 'root', 'structure_id_path': [997], 'rgb_triplet': [255, 255, 255], 'children': [8, 1009, 73]},
+        {'acronym': 'grey', 'id': 8, 'name': 'Basic cell groups and regions', 'structure_id_path': [997, 8], 'rgb_triplet': [191, 218, 227], 'children': [567, 343, 512]}
+    ]
+
+    leaf_nodes = utils.get_leaves_from_tree(structures_list)
+
+    assert leaf_nodes == [8]
