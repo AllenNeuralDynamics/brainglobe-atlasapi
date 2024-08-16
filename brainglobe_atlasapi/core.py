@@ -15,7 +15,7 @@ from brainglobe_atlasapi.descriptors import (
     STRUCTURES_FILENAME,
 )
 from brainglobe_atlasapi.structure_class import StructuresDict
-from brainglobe_atlasapi.utils import read_json, read_tiff
+from brainglobe_atlasapi.utils import read_json, read_tiff, get_leaves_from_tree
 
 LEFT_HEMI_VAL = 1
 RIGHT_HEMI_VAL = 2
@@ -46,6 +46,10 @@ class Atlas:
             )
 
         self.structures = StructuresDict(structures_list)
+
+        # Parse the structure list to find leaf nodes
+        self.leaf_nodes = get_leaves_from_tree(self.structures_list)
+
 
         # Instantiate SpaceConvention object describing the current atlas:
         self.space = AnatomicalSpace(
