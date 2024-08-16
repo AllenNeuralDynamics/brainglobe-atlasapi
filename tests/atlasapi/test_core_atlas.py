@@ -6,6 +6,7 @@ import pandas as pd
 import pytest
 import tifffile
 
+import brainglobe_atlasapi.core as core
 from brainglobe_atlasapi.core import AdditionalRefDict
 
 
@@ -92,7 +93,7 @@ def test_data_from_coords(atlas, coords):
         )
         == "root"
     )
-    assert atlas.hemisphere_from_coords(coords) == atlas.right_hemisphere_value
+    assert atlas.hemisphere_from_coords(coords) == core.RIGHT_HEMI_VAL
     assert atlas.hemisphere_from_coords(coords, as_string=True) == "right"
     assert (
         atlas.hemisphere_from_coords(
@@ -177,8 +178,18 @@ def test_descendants(atlas):
 
 
 def test_mask(atlas):
-    mask = atlas.get_structure_mask('VISp')
-    mask_left = atlas.get_structure_mask('VISp', hemisphere=-1)
+    mask = atlas.get_structure_mask('CH')
+    mask_left = atlas.get_structure_mask('CH', hemisphere=-1)
 
-    assert np.sum(mask > 0) == 7113
-    assert np.sum((mask > 0) & (mask_left > 0)) == 3548
+    assert np.sum(mask > 0) == 17656111
+    assert np.sum((mask > 0) & (mask_left > 0)) == 8809100
+
+
+def test_leaf(atlas):
+    leaf_nodes = atlas.leaf_nodes
+
+    known_leaves = [567]
+
+    print(leaf_nodes)
+    print(known_leaves)
+    assert all(item in leaf_nodes for item in known_leaves)

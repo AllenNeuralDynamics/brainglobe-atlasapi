@@ -350,7 +350,6 @@ def get_leaves_from_tree(structures_list):
     # Get leaf nodes
     leaf_nodes = []
     for id in id_map.keys():
-        print((id, id_map[id]['children']))
         if not id_map[id]['children']:
             leaf_nodes.append(id)
 
