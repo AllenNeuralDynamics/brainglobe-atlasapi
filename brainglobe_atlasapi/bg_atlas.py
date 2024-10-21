@@ -57,7 +57,7 @@ class BrainGlobeAtlas(core.Atlas):
         atlas_name,
         brainglobe_dir=None,
         interm_download_dir=None,
-        check_latest=True,
+        check_latest=False,
         config_dir=None,
         fn_update=None,
     ):
